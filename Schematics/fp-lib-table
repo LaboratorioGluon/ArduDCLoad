@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name "Arduinos")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/Arduinos")(options "")(descr ""))
+  (lib (name "GluonLib")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/GluonLib.pretty")(options "")(descr ""))
+  (lib (name "KicadLibs")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs.pretty")(options "")(descr ""))
+)

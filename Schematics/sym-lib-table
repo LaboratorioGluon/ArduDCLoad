@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name YAAJ_BluePill_Part_Like)(type Legacy)(uri E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/YAAJ_BluePill_Part_Like.lib)(options "")(descr ""))
+  (lib (name arduino)(type Legacy)(uri E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/Arduinos/arduino_nano.lib)(options "")(descr ""))
+  (lib (name GluonLib)(type Legacy)(uri E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/GluonLib.lib)(options "")(descr ""))
+)
