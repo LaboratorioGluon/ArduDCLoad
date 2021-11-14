@@ -58,7 +58,7 @@ void loop() {
     lastScreenMillis = millis();
   }
 
-  // Update screen 'Process'
+  // Measure process
   if(millis() > lastMeasureMillis + MEASURES_PERIOD){
 
   }
