@@ -404,7 +404,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "CargaElectronica.step",
       "vrml": "CargaElectronica_full.wrl"
     },
     "page_layout_descr_file": ""
@@ -439,7 +439,7 @@
       "meta": {
         "version": 0
       },
-      "model_mode": 0,
+      "model_mode": 3,
       "workbook_filename": ""
     },
     "page_layout_descr_file": "",
