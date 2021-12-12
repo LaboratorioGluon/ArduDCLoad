@@ -2,4 +2,5 @@
   (lib (name "Arduinos")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/Arduinos")(options "")(descr ""))
   (lib (name "GluonLib")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/GluonLib.pretty")(options "")(descr ""))
   (lib (name "KicadLibs")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs.pretty")(options "")(descr ""))
+  (lib (name "Online_ARduino")(type "KiCad")(uri "https://github.com/g200kg/kicad-lib-arduino")(options "")(descr ""))
 )
