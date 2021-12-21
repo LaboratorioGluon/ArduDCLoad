@@ -3,8 +3,11 @@
 
 #include <stdint.h>
 
-extern uint32_t rotaryContador;
 
 void rotaryConfigure();
+
+
+uint8_t getRotaryPushState();
+uint32_t getRotaryCounter();
 
 #endif //__ROTARY_H__
