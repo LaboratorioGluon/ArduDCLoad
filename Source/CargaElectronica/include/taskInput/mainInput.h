@@ -5,9 +5,9 @@
 namespace taskInput {
 
     struct inputData{
-        uint32_t rotaryCounter;
+        int32_t rotaryCounter;
         uint8_t  rotarySwitch; // 0 = Off, 1 = Pressed
-        uint16_t voltageSense;
+        uint16_t voltageSense; // [100mV]
         uint8_t  switchOk;
         uint8_t  switchBack;
     };

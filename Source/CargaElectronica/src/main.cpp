@@ -4,9 +4,19 @@
 #include "taskDcLoad/mainDcLoad.h"
 #include "taskScreen/mainScreen.h"
 
+#include "FSM/fsm.h"
 
+#include "FSM/fsmConstantCurrent.h"
+#include "FSM/fsmWelcome.h"
+#include "FSM/fsmMppt.h"
+
+/*
+#include <RotaryEncoder.h>
+extern RotaryEncoder encoder;
+*/
 
 void setup() {
+
 
   Serial.begin(9600);
 
@@ -14,49 +24,29 @@ void setup() {
   taskDcLoad::dcLoadInitialize();
   taskScreen::screenInitialize();
 
+  states[STATE_WELCOME].process = fsmWelcome_process;
+  states[STATE_WELCOME].screen = fsmWelcome_screen;
+  states[STATE_WELCOME].nextState = STATE_CONSTANT_CURRENT;
+
+  states[STATE_CONSTANT_CURRENT].process = fsmConstantCurrent_process;
+  states[STATE_CONSTANT_CURRENT].screen = fsmConstantCurrent_screen;
+  states[STATE_CONSTANT_CURRENT].endState= fsmConstantCurrent_endState;
+  states[STATE_CONSTANT_CURRENT].nextState = STATE_MPPT;
+
+  states[STATE_MPPT].process = fsmMppt_process;
+  states[STATE_MPPT].screen = fsmMppt_screen;
+  states[STATE_MPPT].nextState = STATE_CONSTANT_CURRENT;
+
+
+  fsmCurrentState = STATE_WELCOME;
+
 }
 
-long setPoint;
-
-
-void loop() {
-
-  taskInput::inputMainLoop();
-  taskDcLoad::dcLoadMainLoop();
-  taskScreen::screenMainLoop();
-
-  
-  
-#if 0
-
-  setPoint = map((float)statusData.supply, 0, 500, 0, 255);
-  analogWrite(9, setPoint);
-
-  //Serial.println(rotaryContador);
-  gScreenData.voltage = statusData.supply/100.0f;
-  gScreenData.current = setPoint;
-
-
-  // Update screen 'Process'
-  if(millis() > lastScreenMillis + SCREEN_PERIOD ){
-    screenSetParams(gScreenData);
-    lastScreenMillis = millis();
-  }
-
-  // Measure process
-  if(millis() > lastMeasureMillis + MEASURES_PERIOD){
-
-  }
-
-  // Update status 'Process'
-  if(millis() > lastStatusMillis + STATUS_PERIOD ){
-    statusMainLoop();
-    gScreenData.voltage = statusData.supply/10.0f;
-    lastStatusMillis = millis();
-  }
-
-  delay(200);
-
-#endif 
+void loop()
+{
+    
+    taskInput::inputMainLoop();
+    taskDcLoad::dcLoadMainLoop();
+    taskScreen::screenMainLoop();
 
 }

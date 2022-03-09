@@ -1,9 +1,12 @@
+#include <Arduino.h>
+
 #include "taskDcLoad/mainDcLoad.h"
 #include "taskInput/mainInput.h"
 #include "globalConfig.h"
-#include <Arduino.h>
 
-constexpr unsigned long dcLoadPeriodMs = 100; // 100ms 
+#include "FSM/fsm.h"
+
+constexpr unsigned long dcLoadPeriodMs = 0; // 100ms 
 
 namespace taskDcLoad {
 
@@ -19,6 +22,10 @@ namespace taskDcLoad {
         TCCR1B = (TCCR1B & B11111000) | B00000010; // for PWM frequency of 31372.55 Hz
 
         pinMode(DCLOAD_FAN_OUTPUT_PIN, OUTPUT);
+        digitalWrite(DCLOAD_FAN_OUTPUT_PIN, LOW);
+        
+        analogWrite(9, 0);
+
 
     }
 
@@ -40,13 +47,8 @@ namespace taskDcLoad {
 
     void internalLoop(unsigned long deltaTime){
 
-        if(taskInput::inputOutData.switchOk == LOW){
-            digitalWrite(DCLOAD_FAN_OUTPUT_PIN, HIGH);
-        }else{
-            digitalWrite(DCLOAD_FAN_OUTPUT_PIN, LOW);
-        }
-
-
+        fsmLoop(deltaTime);
+        
     }
     
 

@@ -10,6 +10,8 @@
 
 #include "taskInput/mainInput.h"
 
+#include "FSM/fsm.h"
+
 constexpr unsigned long ScreenPeriodMs = 300; // 100ms 
 
 namespace taskScreen {
@@ -45,7 +47,7 @@ namespace taskScreen {
         lcd.init(); 
 
         lcd.backlight();
-        setScreen(templatesWelcome);
+        //setScreen(templatesWelcome);
 
     }
 
@@ -80,7 +82,9 @@ namespace taskScreen {
 
 
     void internalLoop(unsigned long deltaTime){
+        fsmScreen(lcd);
 
+#if 0
         if( currentScreenState == SCREEN_WELCOME && 
             taskInput::inputOutData.rotarySwitch == 1 &&
             lastInputData.rotarySwitch == 0){
@@ -88,9 +92,7 @@ namespace taskScreen {
                 currentScreenState = SCREEN_SHOW_DATA;
         }
 
-
         updateScreen();
-
 
         if (currentScreenState == SCREEN_SHOW_DATA){
             
@@ -118,13 +120,14 @@ namespace taskScreen {
             lcd.print(decimals2);
         }
 
-       
+    
         lastInputData = taskInput::inputOutData;
+#endif
     }
 
 
     void updateScreen(){
-
+/*
         if(currentScreenState != previousScreenState){
             switch(currentScreenState){
                 case SCREEN_WELCOME:
@@ -136,7 +139,7 @@ namespace taskScreen {
             }
             previousScreenState = currentScreenState;
         }
-
+*/
     }
 
 }

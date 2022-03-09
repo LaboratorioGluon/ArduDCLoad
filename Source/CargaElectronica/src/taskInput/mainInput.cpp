@@ -1,10 +1,13 @@
 #include <Arduino.h>
+
 #include "taskInput/mainInput.h"
 #include "taskInput/rotary.h"
 
+#include "calibration.h"
 #include "globalConfig.h"
 
-constexpr unsigned long InputPeriodMs = 100; // 100ms 
+
+constexpr unsigned long InputPeriodMs = 0; // 100ms 
 
 
 
@@ -22,7 +25,7 @@ namespace taskInput {
         pinMode(INPUT_BUTTON_BACK_PIN, INPUT_PULLUP);
 
         pinMode(INPUT_VOLTAGE_SENSE_PIN, INPUT);
-        analogReference(DEFAULT);
+        analogReference(EXTERNAL);
         
         rotaryConfigure();
 
@@ -32,6 +35,9 @@ namespace taskInput {
     void internalLoop(unsigned long deltaTime);
 
     void inputMainLoop(){
+
+        rotaryTick();
+
 
         // Calculate the time since the last call
         dt = millis() - lastMillis;
@@ -51,14 +57,26 @@ namespace taskInput {
 
     void internalLoop(unsigned long deltaTime){
     
+
         // Rotary Inputs
         inputOutData.rotaryCounter = getRotaryCounter();
         inputOutData.rotarySwitch  = getRotaryPushState();
         
+        
         // Analog inputs
-        uint16_t rawAnalogRead = analogRead(INPUT_VOLTAGE_SENSE_PIN);
+        uint32_t rawAnalogRead= 0;
+        uint16_t unitraw = 0;
+        for( uint8_t i = 0; i < INPUT_ADC_REPEATS; i++){
+            unitraw = analogRead(INPUT_VOLTAGE_SENSE_PIN);
+            rawAnalogRead += unitraw;
+            //rawAnalogRead += analogRead(INPUT_VOLTAGE_SENSE_PIN);
+            
+        }
+        
+        
+        inputOutData.voltageSense = rawAnalogRead * CALIBRATION_ANALOG_REF / 1023.0f * V_TO_100MV * CALIBRATION_SENSE_FACTOR / INPUT_ADC_REPEATS;
 
-        inputOutData.voltageSense = rawAnalogRead * 5.0f / 1023.0f * 100.0f;
+        //Serial.println("Raw Analog Read: " + String(inputOutData.voltageSense));
 
         // Switch Inputs
         inputOutData.switchOk = digitalRead(INPUT_BUTTON_OK_PIN);
@@ -70,7 +88,7 @@ namespace taskInput {
                 Serial.print("Rotary Switch: ");Serial.println(inputOutData.rotarySwitch);
             }
             if (inputOutData.rotaryCounter != 0){
-                Serial.print("Rotary Counter: ");Serial.println(inputOutData.rotaryCounter);
+                Serial.print("Rotary Counter: ");Serial.println((int32_t)inputOutData.rotaryCounter);
             }
         #endif
 

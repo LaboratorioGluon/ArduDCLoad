@@ -6,6 +6,7 @@
 
 void rotaryConfigure();
 
+void rotaryTick();
 
 uint8_t getRotaryPushState();
 uint32_t getRotaryCounter();
