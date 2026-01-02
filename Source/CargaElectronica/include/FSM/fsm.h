@@ -5,15 +5,17 @@
 
 #include "taskInput/mainInput.h"
 
-enum STATE{
+enum STATE
+{
     STATE_WELCOME = 0,
-    STATE_CONSTANT_CURRENT ,
+    STATE_CONSTANT_CURRENT,
     STATE_CONSTANT_POWER,
     STATE_MPPT,
     STATE_END
 };
 
-struct __state{
+struct __state
+{
     void (*process)(unsigned long) = nullptr;
     void (*screen)(LiquidCrystal_I2C) = nullptr;
     void (*endState)() = nullptr;
